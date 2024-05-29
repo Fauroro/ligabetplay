@@ -13,9 +13,9 @@ public class Main {
 
         boolean flag = true;
         while (flag) {
-
+            System.out.println("\n******** LIGA BETPLAY ********\n");
             System.out.println(
-                    "Seleccione la opcion que requiera\n1. Registrar Equipo\n2. Registrar Fecha\n3. Reportes\n4. Salir\n->");
+                    "Seleccione la opcion que requiera\n1. Registrar Equipo\n2. Registrar Fecha\n3. Reportes\n4. Ver tabla de posiciones\n5. Salir\n->");
             int seleccion = sc.nextInt();
 
             switch (seleccion) {
@@ -26,9 +26,12 @@ public class Main {
                     regFecha(resultados);
                     break;
                 case 3:
-                    reportes();
+                    reportes(resultados);
                     break;
                 case 4:
+                    ordenarPuntos(resultados);
+                    break;
+                case 5:
                     flag = false;
                     System.out.println("Gracias por usar nuestros servicios");
                     break;
@@ -36,12 +39,6 @@ public class Main {
                     System.out.println("Seleccione una opcion existente\n");
                     sc.nextLine();
             }
-
-            resultados.forEach(equipos -> {
-                System.out.println(String.format("nombre de equipo es: %s\npartidos jugados: %d",
-                        equipos.getNombreEquipo(), equipos.getJugados()));
-
-            });
 
         }
 
@@ -66,7 +63,6 @@ public class Main {
     public static void regFecha(ArrayList<Tabla> resultados) {
         boolean isTrue = true;
         while (isTrue) {
-            ArrayList<String> list = new ArrayList<>();
             Scanner sc = new Scanner(System.in);
             System.out.println("Ingrese el equipo visitante");
             String visitante = sc.nextLine();
@@ -122,7 +118,7 @@ public class Main {
                 }
             }
 
-            System.out.println("Desea registrar otro equipo. 1 si - 2 no");
+            System.out.println("Desea registrar otra fecha. 1 si - 2 no");
             int valid = sc.nextInt();
             if (valid != 1) {
                 isTrue = false;
@@ -130,16 +126,17 @@ public class Main {
         }
     }
 
-    public static void reportes() {
+    public static void reportes(ArrayList<Tabla> resultados) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<Tabla> resultados = new ArrayList<Tabla>();
 
         boolean flag = true;
-        System.out.println(
-                "Seleccione la opcion que requiera\n1. Nombre del equipo que mas goles anoto\n2. Nombre del equipo que mas puntos tiene\n3. Nombre del equipo que mas partidos gano\n4. Total de goles anotados por todos los equipos\n5. Promedio de goles anotados en el torneola federacion colombiana de futbol\n6. Salir\n->");
-        int seleccion = sc.nextInt();
 
         while (flag) {
+
+            System.out.println("*** MODULO DE REPORTES ***\n");
+            System.out.println(
+                    "Seleccione la opcion que requiera\n1. Nombre del equipo que mas goles anoto\n2. Nombre del equipo que mas puntos tiene\n3. Nombre del equipo que mas partidos gano\n4. Total de goles anotados por todos los equipos\n5. Promedio de goles anotados en el torneola federacion colombiana de futbol\n6. Salir\n->");
+            int seleccion = sc.nextInt();
 
             switch (seleccion) {
                 case 1:
@@ -214,6 +211,34 @@ public class Main {
         }
         promedioGoles = golesTotales / resultados.size();
         System.out.println(String.format("El promedio de goles marcados es: %s", promedioGoles));
+    }
+
+    public static void ordenarPuntos(ArrayList<Tabla> equipos) {
+        int n = equipos.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (equipos.get(j).getTotalPuntos() < equipos.get(j + 1).getTotalPuntos()) {
+                    Tabla temp = equipos.get(j);
+                    equipos.set(j, equipos.get(j + 1));
+                    equipos.set(j + 1, temp);
+                }
+            }
+        }
+        imprimirTabla(equipos);
+    }
+
+    public static void imprimirTabla(ArrayList<Tabla> equipos) {
+        // Imprimir encabezado
+        System.out.printf("%-20s %5s %5s %5s %5s %5s %5s %5s\n",
+                "Equipo", "J", "G", "P", "E", "GF", "GC", "Puntos");
+        System.out.println("---------------------------------------------------------------");
+
+        // Imprimir cada equipo en la tabla
+        for (Tabla equipo : equipos) {
+            System.out.printf("%-20s %5s %5s %5s %5s %5s %5s %5s\n", equipo.getNombreEquipo(), equipo.getJugados(),
+                    equipo.getGanados(), equipo.getPerdidos(), equipo.getEmpates(), equipo.getGolesFavor(),
+                    equipo.getGolesContra(), equipo.getTotalPuntos());
+        }
     }
 
 }
