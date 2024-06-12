@@ -9,7 +9,6 @@ public class Tabla {
     int golesFavor;
     int golesContra;
     int totalPuntos;
-    
 
     public Tabla() {
     }
@@ -89,8 +88,5 @@ public class Tabla {
     public void setTotalPuntos(int totalPuntos) {
         this.totalPuntos = totalPuntos;
     }
-
-    
-
 
 }
