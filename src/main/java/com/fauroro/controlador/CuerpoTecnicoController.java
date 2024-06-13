@@ -40,4 +40,19 @@ public class CuerpoTecnicoController extends Repositorio<CuerpoTecnico> {
     public int lastId() {
         return this.ArrayCuerpoTecnico.size() + 1;
     }
+
+    @Override
+    public List<CuerpoTecnico> load() {
+        return null;
+    }
+
+    @Override
+    public void savePersona() {
+
+    }
+
+    @Override
+    public void update(CuerpoTecnico objeto) {
+
+    }
 }

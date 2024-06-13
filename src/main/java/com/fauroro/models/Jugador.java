@@ -3,17 +3,18 @@ package com.fauroro.models;
 import com.fauroro.Plantel;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Jugador extends Plantel {
 
     int dorsal;
     String posJuego;
-    LocalDate fechaIngreso;
+    String fechaIngreso;
     int golesAnotados;
     int tarjetaRoja;
     int tarjetaAmarilla;
 
-    public Jugador(int id, String nombre, String apellido, int edad, int idEquipo, String nacionalidad, int dorsal, String posJuego, LocalDate fechaIngreso, int golesAnotados, int tarjetaRoja, int tarjetaAmarilla) {
+    public Jugador(int id, String nombre, String apellido, int edad, int idEquipo, String nacionalidad, int dorsal, String posJuego, String fechaIngreso, int golesAnotados, int tarjetaRoja, int tarjetaAmarilla) {
         super(id, nombre, apellido, edad, idEquipo, nacionalidad);
         this.dorsal = dorsal;
         this.posJuego = posJuego;
@@ -39,11 +40,11 @@ public class Jugador extends Plantel {
         this.posJuego = posJuego;
     }
 
-    public LocalDate getFechaIngreso() {
+    public String getFechaIngreso() {
         return fechaIngreso;
     }
 
-    public void setFechaIngreso(LocalDate fechaIngreso) {
+    public void setFechaIngreso(String fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
 

@@ -17,7 +17,7 @@ public class Main {
         while (flag) {
 
             int seleccion = Validar.validarInt("Seleccione la opcion que requiera\n1. " +
-                    "Registrar Equipo\n2. Registrar Fecha\n3. Reportes\n4. Ver tabla de posiciones\n5. Salir\n->");
+                    "Registrar Equipo\n2. Registrar Plantel\n3. Registrar Fecha\n4. Reportes\n5. Ver tabla de posiciones\n6. Salir\n->");
 
 
             switch (seleccion) {
@@ -25,15 +25,18 @@ public class Main {
                     Menus.regEquipo();
                     break;
                 case 2:
-                    Menus.regFecha();
+                    Menus.regPlantel();
                     break;
                 case 3:
-                    Menus.reportes();
+                    Menus.regFecha();
                     break;
                 case 4:
-                    Menus.ordenarPuntos();
+                    Menus.reportes();
                     break;
                 case 5:
+                    Menus.ordenarPuntos();
+                    break;
+                case 6:
                     flag = false;
                     System.out.println("Gracias por usar nuestros servicios");
                     break;

@@ -1,6 +1,7 @@
 package com.fauroro.models;
 
 public class Tabla {
+    int idEquipo;
     String nombreEquipo;
     int jugados;
     int ganados;
@@ -13,8 +14,9 @@ public class Tabla {
     public Tabla() {
     }
 
-    public Tabla(String nombreEquipo, int jugados, int ganados, int perdidos, int empates, int golesFavor,
+    public Tabla(int idEquipo,String nombreEquipo, int jugados, int ganados, int perdidos, int empates, int golesFavor,
             int golesContra, int totalPuntos) {
+        this.idEquipo = idEquipo;
         this.nombreEquipo = nombreEquipo;
         this.jugados = jugados;
         this.ganados = ganados;
@@ -25,10 +27,15 @@ public class Tabla {
         this.totalPuntos = totalPuntos;
     }
 
+    public int getIdEquipo() {
+        return idEquipo;
+    }
     public String getNombreEquipo() {
         return nombreEquipo;
     }
-
+    public void setIdEquipo(int idEquipo) {
+        this.idEquipo = idEquipo;
+    }
     public void setNombreEquipo(String nombreEquipo) {
         this.nombreEquipo = nombreEquipo;
     }

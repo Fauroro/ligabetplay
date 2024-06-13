@@ -1,34 +1,43 @@
 package com.fauroro.controlador;
 
-import com.fauroro.abstraccion.Repositorio;
-import com.fauroro.models.Jugador;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JugadorController extends Repositorio<Jugador> {
+import com.fauroro.abstraccion.Repositorio;
+import com.fauroro.models.Jugador;
 
-    List<Jugador> ArrayJugador;
+public class JugadorController extends Repositorio<Jugador> {
+    private static final String FILE_PATH = "jugador.json";
+    private Gson gson;
+    List<Jugador> arrayJugador;
 
     public JugadorController() {
-        this.ArrayJugador = new ArrayList<>();
+        gson = new GsonBuilder().setPrettyPrinting().create();
+        this.arrayJugador = load();
     }
 
     @Override
     public void save(Jugador objeto) {
-        this.ArrayJugador.add(objeto);
+        this.arrayJugador.add(objeto);
+        savePersona();
 
     }
 
     @Override
     public List<Jugador> show() {
-        return ArrayJugador;
+        return new ArrayList<>(arrayJugador);
     }
 
     @Override
     public Jugador searchId(int id) {
         Jugador resultado = null;
-        for (Jugador c : ArrayJugador) {
+        for (Jugador c : arrayJugador) {
             if (c.getId() == id) {
                 resultado = c;
             }
@@ -38,6 +47,41 @@ public class JugadorController extends Repositorio<Jugador> {
 
     @Override
     public int lastId() {
-        return this.ArrayJugador.size() + 1;
+        return this.arrayJugador.size() + 1;
     }
+
+    @Override
+    public List<Jugador> load() {
+        try (Reader reader = new FileReader(FILE_PATH)) {
+            Type listType = new TypeToken<ArrayList<Jugador>>() {}.getType();
+            return gson.fromJson(reader, listType);
+        } catch (FileNotFoundException e) {
+            return new ArrayList<>(); // Si el archivo no existe, devolver una lista vacía
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public void savePersona() {
+        try (Writer writer = new FileWriter(FILE_PATH)) {
+            gson.toJson(arrayJugador, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update(Jugador objeto) {
+        for (int i = 0; i < arrayJugador.size(); i++) {
+            if (arrayJugador.get(i).getId() == objeto.getId()) {
+                arrayJugador.set(i, objeto);
+                savePersona();
+                return;
+            }
+        }
+    }
+
+
 }

@@ -9,5 +9,8 @@ abstract public class Repositorio<T> {
     abstract public List<T> show();
     abstract public T searchId(int id);
     abstract public int lastId();
+    abstract public List<T> load();
+    abstract public void savePersona();
+    abstract public void update(T objeto);
 
 }

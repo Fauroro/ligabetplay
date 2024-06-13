@@ -1,19 +1,28 @@
 package com.fauroro.vistas;
 
+import com.fauroro.Plantel;
+import com.fauroro.controlador.ControladorTabla;
+import com.fauroro.controlador.JugadorController;
+import com.fauroro.models.Jugador;
 import com.fauroro.models.Tabla;
 import com.fauroro.validacion.Validar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Menus {
     static ArrayList<Tabla> resultados = new ArrayList<Tabla>();
+    static Scanner sc = new Scanner(System.in);
+    static JugadorController myJugadorControlador = new JugadorController();
 
     public static void regEquipo() {
         boolean isTrue = true;
         while (isTrue) {
-            Scanner sc = new Scanner(System.in);
-            Tabla myResuTabla = new Tabla(null, 0, 0, 0, 0, 0, 0, 0);
+            int idEquipo = resultados.size()+1;
+            Tabla myResuTabla = new Tabla(idEquipo,null, 0, 0, 0, 0, 0, 0, 0);
             System.out.println("Ingrese el nombre del equipo : ");
             myResuTabla.setNombreEquipo(sc.nextLine());
             resultados.add(myResuTabla);
@@ -91,6 +100,42 @@ public class Menus {
             }
         }
     }
+
+    public static void regPlantel(){
+        boolean flag = true;
+
+        etiqueta: while (flag) {
+        System.out.println("Equipos Registrados");
+        ControladorTabla.showEquipos(resultados);
+        int idEquipo = Validar.validarInt("Seleccione el id del equipo");
+        Tabla equipoSeleccionado = ControladorTabla.searchId(resultados,idEquipo);
+
+        int seleccion = Validar.validarInt("Seleccione la opcion que requiera\n1. Registrar Jugador\n2. Registrar Cuerpo tecnico\n3. Registrar Cuerpo medico\n4. Salir");
+
+            switch (seleccion) {
+                case 1:
+                    regJugador(equipoSeleccionado.getIdEquipo());
+                    break;
+                case 2:
+                    masPuntos();
+                    break;
+                case 3:
+                    masVictorias();
+                    break;
+                case 4:
+                    flag = false;
+                    System.out.println("Gracias por usar nuestros servicios");
+                    break etiqueta;
+                default:
+                    System.out.println("Seleccione una opcion existente\n");
+                    sc.nextLine();
+            }
+
+            int valid = Validar.validarInt("Desea realizar otro registro. 1 si - 2 no");
+            if (valid != 1) {
+                flag = false;
+            }
+        }    }
 
 
     public static void reportes() {
@@ -217,6 +262,43 @@ public class Menus {
                     equipo.getGanados(), equipo.getPerdidos(), equipo.getEmpates(), equipo.getGolesFavor(),
                     equipo.getGolesContra(), equipo.getTotalPuntos());
         }
+    }
+
+    public static void regJugador(int idEquipo) {
+
+        int idJugador = myJugadorControlador.lastId();
+
+        int edadJugador = Validar.validarInt("Ingrese la edad del jugador");
+        int dorsalJugador = Validar.validarInt("Ingrese el dorsal del jugador");
+        sc.nextLine();
+        System.out.println("Ingrese el Nombre del jugador");
+        String nombreJugador = sc.nextLine();
+        System.out.println("Ingrese el Apellido del jugador");
+        String apellidoJugador = sc.nextLine();
+        System.out.println("Ingrese la nacionalidad del jugador");
+        String nacionalidadJugador = sc.nextLine();
+        System.out.println("Ingrese la posicion de juego del jugador");
+        String posicionJugador = sc.nextLine();
+        System.out.println("Ingrese la fecha de ingreso del jugador (dd/MM/yyyy):");
+        String fechaString = sc.nextLine();
+
+        // Definir el formato de fecha esperado
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+
+        String fechaIngresoJugador = null;
+        try {
+            // Convertir la cadena en un objeto Date
+            Date fecha = formato.parse(fechaString);
+
+            // Imprimir la fecha formateada
+            fechaIngresoJugador = formato.format(fecha);
+        } catch (ParseException e) {
+            // Manejar cualquier error de análisis de fecha
+            System.out.println("Error: Formato de fecha incorrecto. Asegúrate de ingresar la fecha en el formato dd/MM/yyyy.");
+        }
+
+        myJugadorControlador.save(new Jugador(idJugador, nombreJugador, apellidoJugador, edadJugador, idEquipo, nacionalidadJugador, dorsalJugador, posicionJugador, fechaIngresoJugador, 0, 0, 0));
+
     }
 
 }

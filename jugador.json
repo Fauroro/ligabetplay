@@ -1,0 +1,44 @@
+[
+  {
+    "dorsal": 12,
+    "posJuego": "d",
+    "fechaIngreso": "10/10/2010",
+    "golesAnotados": 0,
+    "tarjetaRoja": 0,
+    "tarjetaAmarilla": 0,
+    "id": 1,
+    "nombre": "a",
+    "apellido": "b",
+    "edad": 15,
+    "idEquipo": 1,
+    "nacionalidad": "c"
+  },
+  {
+    "dorsal": 16,
+    "posJuego": "fj",
+    "fechaIngreso": "01/01/2001",
+    "golesAnotados": 0,
+    "tarjetaRoja": 0,
+    "tarjetaAmarilla": 0,
+    "id": 2,
+    "nombre": "r",
+    "apellido": "g",
+    "edad": 12,
+    "idEquipo": 1,
+    "nacionalidad": "g"
+  },
+  {
+    "dorsal": 4,
+    "posJuego": "u",
+    "fechaIngreso": "02/02/2002",
+    "golesAnotados": 0,
+    "tarjetaRoja": 0,
+    "tarjetaAmarilla": 0,
+    "id": 3,
+    "nombre": "d",
+    "apellido": "g",
+    "edad": 123,
+    "idEquipo": 1,
+    "nacionalidad": "t"
+  }
+]
